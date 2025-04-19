@@ -65,14 +65,41 @@ def LikePublication():
                 print("\nPublicação não encontrada!!")
 
 def DeletePublication():
-    print("hello world")#em desenvolvimento (deletar uma publicação)
+    if Publicacoes_das_ias.__len__() == 0:
+        print("\nVocê não tem uma publicação criada ainda!")
+
+    elif Publicacoes_das_ias.__len__() > 0: 
+        print("Por favor informe a publicação que deseja deletar: ")
+
+        for name_publi, publi in Publicacoes_das_ias.items():
+            print(f"\nNome da Publicação: {publi["nome_publi"]} \nTexto da Publicação: {publi["texto_publi"]} \nIA responsavel pela publicação: {publi["ia_responsavel"]} \nCurtidas: {publi["curtidas"]}")
+
+        deletePublication = str(input("\nDigite  a publicação que deseja deletar: "))
+        del Publicacoes_das_ias[deletePublication]
+
+        print(f"\nPublicação '{deletePublication}' deletada com sucesso!!!")
+
 
 def EditPublication():
-    print('hello world')#em desenvolvimento (editar uma publicação)
+    print(" ")
 
 def DeleteIa():
-    print("hello world")#em desenvolvimento (deletar uma ia)
+    print("Por favor informe a IA que deseja deletar: ")
 
+    for id, ias in Ia_existentes.items():
+        print(f"\nNome da IA: {ias['nome_da_ia']} \nData da Criação: {ias['data_do_cadastro']} \nTotal de publicações: {ias['publicacoes']} \nTotal de curtidas: {ias['curtidas_recebidas']}")
+
+    deleteIa = str(input("Digite  a IA que deseja deletar: "))
+    del Ia_existentes[deleteIa]
+
+    print(f"\nIA '{deleteIa}' deletada com sucesso!!!")
+
+    if Ia_existentes.__len__() == 0:
+            print("\nVocê não possui mais IA's criadas!")
+            time.sleep(2)
+            return 2
+
+            
 def EditIa():
     print('hello world')#em desenvolvimento (editar uma ia)
 
@@ -94,31 +121,29 @@ def ShowPublications():
 def OptionsZeroIa():
     print("\nBem vindo a Software de publicações e cadastro de Ia!!")
     print("Para desbloquear mais opções, primeiro cadastre uma IA!")
-    print("Por favor selecione uma das opções a seguir: ")
+    print("\nPor favor selecione uma das opções a seguir: ")
 
-    print("\n1-Cadastrar IAS")
-    print("6-Sair")
+    print("\n1 - Cadastrar IAS")
+    print("2 - Sair")
 
-    chooseOption = int(input("Informe sua escolha aqui: "))
+    chooseOption = int(input("\nInforme sua escolha aqui: "))
 
     if chooseOption == 1:
         CreateIa()
-    elif chooseOption == 6:
-        return 6
+    elif chooseOption == 2:
+        return 2
 
 def OptionsOneMoreIa():
    while True :
-        print("Por favor selecione uma das opções a seguir: ")
+        print("\nPor favor selecione uma das opções a seguir: ")
 
-        print("\nSelecione uma opção: ")
-        print("\n1-Cadastrar IAS")
-        print("2-Cadastrar Publicações")
-        print("3-Curtir uma Publicação")
-        print("4-Mostrar IAS cadastradas")
-        print("5-Mostrar Publicações criadas")
-        print("6-Sair da aplicação")
+        print("\n1 - Cadastrar IAS / 2 - Cadastrar Publicações")
+        print("3 - Curtir uma Publicação / 4 - Mostrar IAS cadastradas")
+        print("5 - Mostrar Publicações criadas / 6 - Deletar publicação")
+        print("7 - Deletar IA")
+        print("8 - Sair da aplicação")
 
-        chooseOption = int(input("Informe sua escolha aqui: "))
+        chooseOption = int(input("\nInforme sua escolha aqui: "))
 
         if chooseOption == 1:
             CreateIa()
@@ -133,13 +158,20 @@ def OptionsOneMoreIa():
             ShowPublications()
             time.sleep(3)
         elif chooseOption == 6:
-            return 6  
+            DeletePublication()
+            time.sleep(2)
+        elif chooseOption == 7:
+            if DeleteIa() == 2:
+                break
+            time.sleep(2)
+        elif chooseOption == 8:
+            return 2
 
 def MenuSoftware():
     while True: 
         if Ia_existentes.__len__() == 0:
-            if OptionsZeroIa() == 6:
-                break
+            if OptionsZeroIa() == 2:
+                return False
         elif Ia_existentes.__len__() > 0:
-            if OptionsOneMoreIa() == 6:
+            if OptionsOneMoreIa() == 2:
                 break
