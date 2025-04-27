@@ -79,9 +79,45 @@ def DeletePublication():
 
         print(f"\nPublicação '{deletePublication}' deletada com sucesso!!!")
 
-
 def EditPublication():
-    print(" ")
+    if Publicacoes_das_ias.__len__() == 0:
+        print("\nVocê não tem uma publicação criada ainda!")
+
+    elif Publicacoes_das_ias.__len__() > 0: 
+        print("\nPor favor selecione uma publicação que deseja editar: ")
+
+        for name_publi, publi in Publicacoes_das_ias.items():
+            print(f"\nNome da Publicação: {publi["nome_publi"]} \nTexto da Publicação: {publi["texto_publi"]} \nIA responsavel pela publicação: {publi["ia_responsavel"]} \nCurtidas: {publi["curtidas"]}")
+        
+        showTempPublication = input("\nInforme o nome da publicação que deseja editar: ")
+        
+        print("\nEscolha um dos campos da publicação para editar: ")
+        print("1 - Nome da Publicação")
+        print("2 - Texto da Publicação")
+        print("3 - IA responsavel pela publicação")
+
+        editTempPublication = int(input("Informe o número correspondente ao campo aqui: "))
+
+        if(editTempPublication == 1):
+            editNameOfPublication = input("Informe o novo nome da publicação: ")
+
+            Publicacoes_das_ias[showTempPublication].update({"nome_publi": editNameOfPublication})
+        elif(editTempPublication == 2):
+            editTextOfPublication = input("Informe o novo texto da publicação aqui: ")
+
+            Publicacoes_das_ias[showTempPublication].update({"texto_publi": editTextOfPublication})
+        elif(editTempPublication == 3):
+
+            print("Confira a Lista de Ia Disponivel: ")
+
+            for id, ias in Ia_existentes.items():
+                print(f"\nNome da IA: {ias['nome_da_ia']} \nData da Criação: {ias['data_do_cadastro']} \nTotal de publicações: {ias['publicacoes']} \nTotal de curtidas: {ias['curtidas_recebidas']}")
+
+            editIaOfPublication = input("Informe a nova IA responsavel pela publicação aqui: ")
+
+            Publicacoes_das_ias[showTempPublication].update({"ia_responsavel": editIaOfPublication})
+        elif(editTempPublication == 0 or editTempPublication > 3):
+           print("Opção invalida!!!")
 
 def DeleteIa():
     print("Por favor informe a IA que deseja deletar: ")
@@ -99,9 +135,19 @@ def DeleteIa():
             time.sleep(2)
             return 2
 
-            
 def EditIa():
-    print('hello world')#em desenvolvimento (editar uma ia)
+    print("Por favor informe qual ia deseja alterar o nome: ")
+    
+    for id, ias in Ia_existentes.items():
+        print(f"\nNome da IA: {ias['nome_da_ia']} \nData da Criação: {ias['data_do_cadastro']} \nTotal de publicações: {ias['publicacoes']} \nTotal de curtidas: {ias['curtidas_recebidas']}")
+    
+    showTempIa = str(input("\nInforme sua escolha aqui: "))
+
+    editTempIa = input("\nInforme o novo nome da Ia: ")
+
+    Ia_existentes[showTempIa].update({"nome_da_ia" : editTempIa})
+
+    print("\nNome editado com sucesso!!")
 
 def ShowIa():
     print("\nSegue a lista de todas as IA cadastradas na aplicação: ")
@@ -140,8 +186,9 @@ def OptionsOneMoreIa():
         print("\n1 - Cadastrar IAS / 2 - Cadastrar Publicações")
         print("3 - Curtir uma Publicação / 4 - Mostrar IAS cadastradas")
         print("5 - Mostrar Publicações criadas / 6 - Deletar publicação")
-        print("7 - Deletar IA")
-        print("8 - Sair da aplicação")
+        print("7 - Deletar IA / 8 - Editar Ia")
+        print("9 - Editar uma Publicação")
+        print("0 - Sair da aplicação")
 
         chooseOption = int(input("\nInforme sua escolha aqui: "))
 
@@ -165,6 +212,14 @@ def OptionsOneMoreIa():
                 break
             time.sleep(2)
         elif chooseOption == 8:
+            if EditIa() == 2:
+                break
+            time.sleep(2)
+        elif chooseOption == 9:
+            if EditPublication() == 2:
+                break
+            time.sleep(2)
+        elif chooseOption == 0:
             return 2
 
 def MenuSoftware():
